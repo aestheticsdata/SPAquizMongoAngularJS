@@ -1,11 +1,22 @@
-var gulp   = require('gulp'),
-    concat = require('gulp-concat'),
-    sass   = require('gulp-sass');
-    //watch  = require('gulp-watch');
+var gulp   =  require('gulp'),
+    concat =  require('gulp-concat'),
+    sass   =  require('gulp-sass'),
+    connect = require('gulp-connect');
 
-//gulp.task('default', ['concatLibs', 'concatSrc']);
 
-gulp.task('default', ['concatSrc']);
+
+/////////////////////////////////////////////
+//
+//  ████████╗ █████╗ ███████╗██╗  ██╗███████╗
+//  ╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝██╔════╝
+//     ██║   ███████║███████╗█████╔╝ ███████╗
+//     ██║   ██╔══██║╚════██║██╔═██╗ ╚════██║
+//     ██║   ██║  ██║███████║██║  ██╗███████║
+//     ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
+//
+///////////////////////////////////////////////
+
+gulp.task('default', ['connect', 'watch']);
 
 gulp.task('concatLibs', function () {
     return gulp.src(['bower_components/angular/angular.min.js', 'bower_components/angular-ui-router/release/angular-ui-router.min.js'])
@@ -20,5 +31,9 @@ gulp.task('concatSrc', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('./js/**/*.js', ['default']);
+    gulp.watch('./js/**/*.js', ['concatSrc']);
+});
+
+gulp.task('connect', function() {
+    connect.server();
 });
