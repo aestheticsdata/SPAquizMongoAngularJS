@@ -7,7 +7,7 @@ angular.module('SPAquiz.controllers').controller('LoginController', LoginControl
 
 function LoginController($scope) {
 
-    $scope.login = 'your login hello world efihbeciuhb';
+    $scope.login = 'your login';
 }
 //ServicesNS.js
 

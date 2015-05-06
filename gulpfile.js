@@ -30,10 +30,18 @@ gulp.task('concatSrc', function () {
        .pipe(gulp.dest('./build/'));
 });
 
+gulp.task('sass', function () {
+    return gulp.src('./sass/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('./css'));
+});
+
 gulp.task('watch', function () {
-    gulp.watch('./js/**/*.js', ['concatSrc']);
+    gulp.watch(['index.html', './js/**/*.js', './sass/*.scss'], ['concatSrc', 'sass']);
 });
 
 gulp.task('connect', function() {
-    connect.server();
+    connect.server({
+        livereload: true
+    });
 });
