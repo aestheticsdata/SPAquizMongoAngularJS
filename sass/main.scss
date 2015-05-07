@@ -1,11 +1,15 @@
 @font-face {
     font-family: 'Lato';
     src: url('../assets/fonts/Lato/Lato-Hairline.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 100;
 }
 
 @font-face {
-    font-family: 'Lato-Bold';
+    font-family: 'Lato';
     src: url('../assets/fonts/Lato/Lato-Light.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 300;
 }
 
 body {
@@ -37,10 +41,12 @@ body {
     .title-hxf {
         font-family: Lato;
         font-size: 80px;
+        font-weight: 100;
         color: #fff;
     }
     .title-hxf-bold {
-        font-family: Lato-Bold;
+        font-family: Lato;
+        font-weight: 300;
     }
     a:link {
         text-decoration: none;
