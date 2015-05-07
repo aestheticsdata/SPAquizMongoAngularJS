@@ -17,7 +17,7 @@ angular.module('SPAquiz', ['SPAquiz.controllers', 'SPAquiz.services', 'ui.router
                 templateUrl : 'partials/404.html'
             });
 
-        //$urlRouterProvider.otherwise('/404');
+        $urlRouterProvider.otherwise('/login');
     })
 
     .run(function ($state) {
