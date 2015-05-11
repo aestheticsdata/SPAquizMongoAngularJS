@@ -4,11 +4,23 @@ angular.module('SPAquiz.controllers', []);
 //ServicesNS.js
 
 angular.module('SPAquiz.services', []);
+// QuestionsController.js
+
+angular.module('SPAquiz.controllers').controller('QuestionsController', QuestionsController);
+
+function QuestionsController($scope, $stateParams, QuestionsService) {
+
+    console.log('$stateParams : ', $stateParams);
+
+    console.log('QuestionsService : ', QuestionsService.getQuestions());
+
+    $scope.questions = QuestionsService.getQuestions();
+}
 //loginController.js
 
 angular.module('SPAquiz.controllers').controller('LoginController', LoginController);
 
-function LoginController($scope, LoginService) {
+function LoginController($scope, $state, LoginService, QuestionsService) {
 
     $scope.login = function () {
 
@@ -21,6 +33,9 @@ function LoginController($scope, LoginService) {
         LoginService.login(user, pass)
             .success(function (res) {
                 console.log(res);
+
+                QuestionsService.setQuestions(res);
+                $state.go('quiz');
             })
             .error(function (res) {
                 console.log(res);
@@ -55,12 +70,50 @@ function LoginService($http, CONFIG) {
 
     return ws;
 
+
+
+
+//  ┌─┐┬─┐┬┬  ┬┌─┐┌┬┐┌─┐  ┌┬┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┌─┐
+//  ├─┘├┬┘│└┐┌┘├─┤ │ ├┤   │││├┤  │ ├─┤│ │ ││└─┐
+//  ┴  ┴└─┴ └┘ ┴ ┴ ┴ └─┘  ┴ ┴└─┘ ┴ ┴ ┴└─┘─┴┘└─┘
+
     function _login(user, pass) {
         return $http.post(
             CONFIG.loginUrl, {
             username : user,
             password : pass
         });
+    }
+}
+// QuestionsService.js
+
+angular.module('SPAquiz.services').factory('QuestionsService', QuestionsService);
+
+function QuestionsService() {
+
+    var qs = {
+        questions    : [],
+        setQuestions : _setQuestions,
+        getQuestions : _getQuestions
+    };
+
+    return qs;
+
+
+
+
+//  ┌─┐┬─┐┬┬  ┬┌─┐┌┬┐┌─┐  ┌┬┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┌─┐
+//  ├─┘├┬┘│└┐┌┘├─┤ │ ├┤   │││├┤  │ ├─┤│ │ ││└─┐
+//  ┴  ┴└─┴ └┘ ┴ ┴ ┴ └─┘  ┴ ┴└─┘ ┴ ┴ ┴└─┘─┴┘└─┘
+
+    function _setQuestions(questions) {
+
+        qs.questions = questions;
+        return true;
+    }
+
+    function _getQuestions() {
+        return qs.questions;
     }
 }
 // app.js
@@ -75,6 +128,12 @@ angular.module('SPAquiz', ['SPAquiz.controllers', 'SPAquiz.services', 'ui.router
                 url         : '/login',
                 templateUrl : 'partials/login.html',
                 controller  : 'LoginController'
+            })
+
+            .state('quiz', {
+                url         : '/questions/:id',
+                templateUrl : 'partials/questions.html',
+                controller  : "QuestionsController"
             })
 
             .state('404', {

@@ -16,7 +16,7 @@ var gulp    = require('gulp'),
 //
 ///////////////////////////////////////////////
 
-gulp.task('default', ['connect', 'watch']);
+gulp.task('default', ['concatSrc', 'sass', 'connect', 'watch']);
 
 gulp.task('concatLibs', function () {
     return gulp.src([
@@ -38,8 +38,9 @@ gulp.task('concatSrc', function () {
 });
 
 gulp.task('sass', function () {
-    return gulp.src('./sass/*.scss')
+    return gulp.src('./sass/main.scss')
         .pipe(sass())
+        .pipe(concat('main.css'))
         .pipe(gulp.dest('./css'));
 });
 

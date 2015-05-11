@@ -12,6 +12,12 @@ angular.module('SPAquiz', ['SPAquiz.controllers', 'SPAquiz.services', 'ui.router
                 controller  : 'LoginController'
             })
 
+            .state('quiz', {
+                url         : '/questions/:id',
+                templateUrl : 'partials/questions.html',
+                controller  : "QuestionsController"
+            })
+
             .state('404', {
                 url         : '/404',
                 templateUrl : 'partials/404.html'

@@ -10,6 +10,13 @@ function LoginService($http, CONFIG) {
 
     return ws;
 
+
+
+
+//  ┌─┐┬─┐┬┬  ┬┌─┐┌┬┐┌─┐  ┌┬┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┌─┐
+//  ├─┘├┬┘│└┐┌┘├─┤ │ ├┤   │││├┤  │ ├─┤│ │ ││└─┐
+//  ┴  ┴└─┴ └┘ ┴ ┴ ┴ └─┘  ┴ ┴└─┘ ┴ ┴ ┴└─┘─┴┘└─┘
+
     function _login(user, pass) {
         return $http.post(
             CONFIG.loginUrl, {

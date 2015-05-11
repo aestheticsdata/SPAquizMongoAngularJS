@@ -2,7 +2,7 @@
 
 angular.module('SPAquiz.controllers').controller('LoginController', LoginController);
 
-function LoginController($scope, LoginService) {
+function LoginController($scope, $state, LoginService, QuestionsService) {
 
     $scope.login = function () {
 
@@ -15,6 +15,9 @@ function LoginController($scope, LoginService) {
         LoginService.login(user, pass)
             .success(function (res) {
                 console.log(res);
+
+                QuestionsService.setQuestions(res);
+                $state.go('quiz');
             })
             .error(function (res) {
                 console.log(res);
