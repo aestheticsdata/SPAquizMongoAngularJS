@@ -12,9 +12,9 @@ function QuestionsController($scope, $stateParams, QuestionsService) {
 
     console.log('$stateParams : ', $stateParams);
 
-    console.log('QuestionsService : ', QuestionsService.getQuestions());
+    console.log('QuestionsService : ', QuestionsService.getQuestions($stateParams.idx));
 
-    $scope.questions = QuestionsService.getQuestions();
+    $scope.questions = QuestionsService.getQuestions($stateParams.idx);
 }
 //loginController.js
 
@@ -35,7 +35,8 @@ function LoginController($scope, $state, LoginService, QuestionsService) {
                 console.log(res);
 
                 QuestionsService.setQuestions(res);
-                $state.go('quiz');
+
+                $state.go('quiz', {idx:0}); // go to first question
             })
             .error(function (res) {
                 console.log(res);
@@ -108,12 +109,14 @@ function QuestionsService() {
 
     function _setQuestions(questions) {
 
+        console.log('QuestionsService::setQuestions : ' , questions);
+
         qs.questions = questions;
         return true;
     }
 
-    function _getQuestions() {
-        return qs.questions;
+    function _getQuestions(idx) {
+        return qs.questions[idx];
     }
 }
 // app.js
@@ -131,7 +134,7 @@ angular.module('SPAquiz', ['SPAquiz.controllers', 'SPAquiz.services', 'ui.router
             })
 
             .state('quiz', {
-                url         : '/questions/:id',
+                url         : '/questions/:idx',
                 templateUrl : 'partials/questions.html',
                 controller  : "QuestionsController"
             })

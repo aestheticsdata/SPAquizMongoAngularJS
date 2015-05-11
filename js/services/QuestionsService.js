@@ -21,11 +21,13 @@ function QuestionsService() {
 
     function _setQuestions(questions) {
 
+        console.log('QuestionsService::setQuestions : ' , questions);
+
         qs.questions = questions;
         return true;
     }
 
-    function _getQuestions() {
-        return qs.questions;
+    function _getQuestions(idx) {
+        return qs.questions[idx];
     }
 }

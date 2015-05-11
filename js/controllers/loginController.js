@@ -17,7 +17,8 @@ function LoginController($scope, $state, LoginService, QuestionsService) {
                 console.log(res);
 
                 QuestionsService.setQuestions(res);
-                $state.go('quiz');
+
+                $state.go('quiz', {idx:0}); // go to first question
             })
             .error(function (res) {
                 console.log(res);

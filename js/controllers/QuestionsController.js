@@ -6,7 +6,7 @@ function QuestionsController($scope, $stateParams, QuestionsService) {
 
     console.log('$stateParams : ', $stateParams);
 
-    console.log('QuestionsService : ', QuestionsService.getQuestions());
+    console.log('QuestionsService : ', QuestionsService.getQuestions($stateParams.idx));
 
-    $scope.questions = QuestionsService.getQuestions();
+    $scope.questions = QuestionsService.getQuestions($stateParams.idx);
 }

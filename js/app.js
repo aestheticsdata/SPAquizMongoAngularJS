@@ -13,7 +13,7 @@ angular.module('SPAquiz', ['SPAquiz.controllers', 'SPAquiz.services', 'ui.router
             })
 
             .state('quiz', {
-                url         : '/questions/:id',
+                url         : '/questions/:idx',
                 templateUrl : 'partials/questions.html',
                 controller  : "QuestionsController"
             })
