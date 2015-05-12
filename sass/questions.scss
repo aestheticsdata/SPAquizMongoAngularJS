@@ -1,17 +1,13 @@
 .questions {
 
+    @include userselect;
+
     cursor: default;
 
     margin-top: 50px;
 
     opacity: 0.9;
 
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 
     .list-group-hxf {
         margin-top: 20px;
@@ -27,7 +23,7 @@
     .choices {
 
         &:first-child{
-            
+
         }
 
         color: #565656;
