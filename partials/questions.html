@@ -1,11 +1,11 @@
 <div class="questions">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row buttons-prev-next-hxf">
             <div class="col-xs-offset-3 col-xs-3">
-                <button class="btn btn-primary btn-lg btn-block" ng-disabled="isPrevDisabled">PREVIOUS</button>
+                <button class="btn btn-primary btn-lg btn-block" ng-disabled="isPrevDisabled" ng-click="prev()">PREVIOUS</button>
             </div>
             <div class="col-xs-3">
-                <button class="btn btn-primary btn-lg btn-block" ng-disabled="isNextDisabled">NEXT</button>
+                <button class="btn btn-primary btn-lg btn-block" ng-disabled="isNextDisabled" ng-click="next()">NEXT</button>
             </div>
         </div>
         <div class="row">
@@ -19,7 +19,7 @@
                         <div class="list-group list-group-hxf">
                         <ul ng-repeat="entry in questions.choices" class="list-group-item choices">
 
-                            <input id="{{entry}}" type="radio" name="answerRadio" ng-value="$index" ng-model="$parent.chosen" />
+                            <input id="{{entry}}" type="radio" name="answerRadio" ng-checked="$index === 0" ng-click="onRadioChanged($index)" />
                             <!--<label for="{{entry}}">-->
                                 <span class="entry">{{entry}}</span>
                             <!--</label>-->
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-offset-3 col-md-6">
+                <div class="col-xs-12">
                     <div class="text-center counter-hxf">{{currentQuestionIdx}}/{{totalQuestionIdx}}</div>
                 </div>
             </div>

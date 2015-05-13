@@ -4,25 +4,6 @@ angular.module('SPAquiz.controllers', []);
 //ServicesNS.js
 
 angular.module('SPAquiz.services', []);
-// QuestionsController.js
-
-angular.module('SPAquiz.controllers').controller('QuestionsController', QuestionsController);
-
-function QuestionsController($scope, $stateParams, QuestionsService) {
-
-    console.log('$stateParams : ', $stateParams);
-
-    console.log('QuestionsService : ', QuestionsService.getQuestions($stateParams.idx));
-
-    $scope.isPrevDisabled = true;
-    $scope.isNextDisabled = false;
-
-    $scope.questions = QuestionsService.getQuestions($stateParams.idx);
-    $scope.currentQuestionIdx = parseInt($stateParams.idx, 10) + 1; // array 0 based
-    $scope.totalQuestionIdx   = QuestionsService.getQuestions().length;
-
-    $scope.chosen = $scope.questions.choices[0];
-}
 //loginController.js
 
 angular.module('SPAquiz.controllers').controller('LoginController', LoginController);
@@ -59,6 +40,54 @@ function LoginController($scope, $state, LoginService, QuestionsService) {
     };
 
     $scope.loginerror = false;
+}
+// QuestionsController.js
+
+angular.module('SPAquiz.controllers').controller('QuestionsController', QuestionsController);
+
+function QuestionsController($scope, $state, $stateParams, QuestionsService) {
+
+
+    var currentIndex    = $stateParams.idx,
+        questionsLength = QuestionsService.getQuestions().length;
+
+
+
+
+    $scope.isPrevDisabled = (parseInt(currentIndex) === 0);
+    $scope.isNextDisabled = false;
+
+    $scope.questions = QuestionsService.getQuestions(currentIndex);
+    $scope.currentQuestionIdx = parseInt(currentIndex, 10) + 1; // array 0 based
+    $scope.totalQuestionIdx   = questionsLength;
+
+
+
+
+
+    $scope.onRadioChanged = function (idx) {
+        console.log('radio has changed : ', idx);
+    };
+
+    $scope.prev = function () {
+        $state.go('quiz', {idx:currentIndex === 0 ? currentIndex : parseInt(currentIndex-1)});
+    };
+
+    $scope.next = function () {
+        if (parseInt(currentIndex) === questionsLength-1) {
+            $state.go('score');
+        } else {
+            $state.go('quiz', {idx:parseInt(currentIndex)+1});
+        }
+    }
+}
+// ScoreController.js
+
+angular.module('SPAquiz.controllers').controller('ScoreController', ScoreController);
+
+function ScoreController($scope, QuestionsService) {
+
+    $scope.score = QuestionsService.getScore();
 }
 // ConstantService.js
 
@@ -101,6 +130,9 @@ function QuestionsService() {
 
     var qs = {
         questions    : [],
+        score        : 0,
+        setScore     : _setScore,
+        getScore     : _getScore,
         setQuestions : _setQuestions,
         getQuestions : _getQuestions
     };
@@ -119,11 +151,28 @@ function QuestionsService() {
         console.log('QuestionsService::setQuestions : ' , questions);
 
         qs.questions = questions;
+
         return true;
     }
 
+
     function _getQuestions(idx) {
+
         return idx ? qs.questions[idx] : qs.questions;
+    }
+
+
+    function _setScore(score) {
+
+        qs.score = score;
+
+        return true;
+    }
+
+
+    function _getScore(){
+
+        return qs.score;
     }
 }
 // app.js
@@ -144,6 +193,12 @@ angular.module('SPAquiz', ['SPAquiz.controllers', 'SPAquiz.services', 'ui.router
                 url         : '/questions/:idx',
                 templateUrl : 'partials/questions.html',
                 controller  : "QuestionsController"
+            })
+
+            .state('score', {
+                url         : '/score',
+                templateUrl : 'partials/score.html',
+                controller  : "ScoreController"
             })
 
             .state('404', {

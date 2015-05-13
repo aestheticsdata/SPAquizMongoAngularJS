@@ -6,6 +6,9 @@ function QuestionsService() {
 
     var qs = {
         questions    : [],
+        score        : 0,
+        setScore     : _setScore,
+        getScore     : _getScore,
         setQuestions : _setQuestions,
         getQuestions : _getQuestions
     };
@@ -24,10 +27,27 @@ function QuestionsService() {
         console.log('QuestionsService::setQuestions : ' , questions);
 
         qs.questions = questions;
+
         return true;
     }
 
+
     function _getQuestions(idx) {
+
         return idx ? qs.questions[idx] : qs.questions;
+    }
+
+
+    function _setScore(score) {
+
+        qs.score = score;
+
+        return true;
+    }
+
+
+    function _getScore(){
+
+        return qs.score;
     }
 }
