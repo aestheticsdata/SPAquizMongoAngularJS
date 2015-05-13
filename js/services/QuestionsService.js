@@ -28,6 +28,6 @@ function QuestionsService() {
     }
 
     function _getQuestions(idx) {
-        return qs.questions[idx];
+        return idx ? qs.questions[idx] : qs.questions;
     }
 }

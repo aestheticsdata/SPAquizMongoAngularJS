@@ -22,10 +22,6 @@
 
     .choices {
 
-        &:first-child{
-
-        }
-
         color: #565656;
         font-family: Muli;
         font-weight: 400;
@@ -36,5 +32,18 @@
             border-left: 1px solid rgba(0, 0, 0, 0.35);
             padding-left: 10px;
         }
+    }
+    
+    .counter-hxf {
+        font-size: 120px;
+        color: #fffe00;
+        font-family: Bebas;
+        font-size: 120px;
+        font-weight: 400;
+        text-shadow: 1px 0px 20px yellow;
+    }
+
+    .buttons-prev-next-hxf {
+        margin-bottom: 10px;
     }
 }
