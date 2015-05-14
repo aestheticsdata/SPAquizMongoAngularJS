@@ -64,8 +64,12 @@ function QuestionsController($scope, $state, $stateParams, QuestionsService) {
 
 
 
+    $scope.checkedQuestion = function () {
+        return QuestionsService.currentAnswers[currentIndex] === -1 ? 0 : QuestionsService.currentAnswers[currentIndex];
+    };
 
     $scope.onRadioChanged = function (idx) {
+        QuestionsService.currentAnswers[currentIndex] = idx;
         console.log('radio has changed : ', idx);
     };
 
@@ -129,12 +133,13 @@ angular.module('SPAquiz.services').factory('QuestionsService', QuestionsService)
 function QuestionsService() {
 
     var qs = {
-        questions    : [],
-        score        : 0,
-        setScore     : _setScore,
-        getScore     : _getScore,
-        setQuestions : _setQuestions,
-        getQuestions : _getQuestions
+        questions      : [],
+        currentAnswers : [],
+        score          : 0,
+        setScore       : _setScore,
+        getScore       : _getScore,
+        setQuestions   : _setQuestions,
+        getQuestions   : _getQuestions
     };
 
     return qs;
@@ -151,6 +156,10 @@ function QuestionsService() {
         console.log('QuestionsService::setQuestions : ' , questions);
 
         qs.questions = questions;
+
+        for (var i=0; i<qs.questions.length; i++) {
+            qs.currentAnswers.push(-1);
+        }
 
         return true;
     }
@@ -172,6 +181,10 @@ function QuestionsService() {
 
     function _getScore(){
 
+        for(var i=0; i<qs.questions.length; i++) {
+            (qs.currentAnswers[i] === -1) && (qs.currentAnswers[i] = 0);
+            (qs.questions[i].correctAnswer === qs.currentAnswers[i]) && qs.score++;
+        }
         return qs.score;
     }
 }

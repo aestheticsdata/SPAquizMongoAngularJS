@@ -21,8 +21,12 @@ function QuestionsController($scope, $state, $stateParams, QuestionsService) {
 
 
 
+    $scope.checkedQuestion = function () {
+        return QuestionsService.currentAnswers[currentIndex] === -1 ? 0 : QuestionsService.currentAnswers[currentIndex];
+    };
 
     $scope.onRadioChanged = function (idx) {
+        QuestionsService.currentAnswers[currentIndex] = idx;
         console.log('radio has changed : ', idx);
     };
 
