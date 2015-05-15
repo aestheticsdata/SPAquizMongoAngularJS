@@ -5,11 +5,12 @@ var gulp        = require('gulp'),
     ngAnnotate  = require('gulp-ng-annotate'),
     rename      = require('gulp-rename'),
     uglify      = require('gulp-uglify'),
-    htmlreplace = require('gulp-html-replace');
+    htmlreplace = require('gulp-html-replace'),
+    zip         = require('gulp-zip');
 
 
 
-/////////////////////////////////////////////
+//█████████████████████████████████████████████
 //
 //  ████████╗ █████╗ ███████╗██╗  ██╗███████╗
 //  ╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝██╔════╝
@@ -18,13 +19,17 @@ var gulp        = require('gulp'),
 //     ██║   ██║  ██║███████║██║  ██╗███████║
 //     ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
 //
-///////////////////////////////////////////////
+//█████████████████████████████████████████████
 
 gulp.task('default', ['htmlreplacedev', 'concatSrc', 'sass', 'connect', 'watch']);
 
-gulp.task('prod', ['concatSrc', 'sass', 'annotate', 'htmlreplaceprod']);
+gulp.task('prod', ['concatSrc', 'sass', 'annotate', 'htmlreplaceprod', 'zip']);
 
 
+
+//  ┌─┐┌─┐┌┐┌┌─┐┌─┐┌┬┐┬  ┬┌┐ ┌─┐
+//  │  │ │││││  ├─┤ │ │  │├┴┐└─┐
+//  └─┘└─┘┘└┘└─┘┴ ┴ ┴ ┴─┘┴└─┘└─┘
 
 gulp.task('concatLibs', function () {
     return gulp.src([
@@ -34,6 +39,13 @@ gulp.task('concatLibs', function () {
         .pipe(concat('libs.js'))
         .pipe(gulp.dest('./build/'));
 });
+
+
+
+
+//  ┌─┐┌─┐┌┐┌┌─┐┌─┐┌┬┐┌─┐┬─┐┌─┐
+//  │  │ │││││  ├─┤ │ └─┐├┬┘│
+//  └─┘└─┘┘└┘└─┘┴ ┴ ┴ └─┘┴└─└─┘
 
 gulp.task('concatSrc', function () {
    return gulp.src(['./js/namespaces/*.js',
@@ -45,6 +57,13 @@ gulp.task('concatSrc', function () {
        .pipe(gulp.dest('./build/'));
 });
 
+
+
+
+//  ┌─┐┌─┐┌─┐┌─┐
+//  └─┐├─┤└─┐└─┐
+//  └─┘┴ ┴└─┘└─┘
+
 gulp.task('sass', function () {
     return gulp.src('./sass/main.scss')
         .pipe(sass())
@@ -52,15 +71,36 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('./css'));
 });
 
+
+
+
+//  ┬ ┬┌─┐┌┬┐┌─┐┬ ┬
+//  │││├─┤ │ │  ├─┤
+//  └┴┘┴ ┴ ┴ └─┘┴ ┴
+
 gulp.task('watch', function () {
     gulp.watch(['index.html', './js/**/*.js', './sass/*.scss'], ['concatSrc', 'sass']);
 });
+
+
+
+
+//  ┌─┐┌─┐┌┐┌┌┐┌┌─┐┌─┐┌┬┐
+//  │  │ │││││││├┤ │   │
+//  └─┘└─┘┘└┘┘└┘└─┘└─┘ ┴
 
 gulp.task('connect', function() {
     connect.server({
         livereload: true
     });
 });
+
+
+
+
+//  ┌─┐┌┐┌┌┐┌┌─┐┌┬┐┌─┐┌┬┐┌─┐
+//  ├─┤│││││││ │ │ ├─┤ │ ├┤
+//  ┴ ┴┘└┘┘└┘└─┘ ┴ ┴ ┴ ┴ └─┘
 
 gulp.task('annotate', function () {
     return gulp.src('build/build.js')
@@ -74,6 +114,13 @@ gulp.task('annotate', function () {
         .pipe(gulp.dest('./build/prod/'));
 });
 
+
+
+
+//  ┬ ┬┌┬┐┌┬┐┬  ┬─┐┌─┐┌─┐┬  ┌─┐┌─┐┌─┐┌─┐┬─┐┌─┐┌┬┐
+//  ├─┤ │ ││││  ├┬┘├┤ ├─┘│  ├─┤│  ├┤ ├─┘├┬┘│ │ ││
+//  ┴ ┴ ┴ ┴ ┴┴─┘┴└─└─┘┴  ┴─┘┴ ┴└─┘└─┘┴  ┴└─└─┘─┴┘
+
 gulp.task('htmlreplaceprod', function () {
     return gulp.src('index.html')
         .pipe(htmlreplace({
@@ -82,10 +129,31 @@ gulp.task('htmlreplaceprod', function () {
         .pipe(gulp.dest('.'));
 });
 
+
+
+
+//  ┬ ┬┌┬┐┌┬┐┬  ┬─┐┌─┐┌─┐┬  ┌─┐┌─┐┌─┐┌┬┐┌─┐┬  ┬
+//  ├─┤ │ ││││  ├┬┘├┤ ├─┘│  ├─┤│  ├┤  ││├┤ └┐┌┘
+//  ┴ ┴ ┴ ┴ ┴┴─┘┴└─└─┘┴  ┴─┘┴ ┴└─┘└─┘─┴┘└─┘ └┘
+
 gulp.task('htmlreplacedev', function () {
     return gulp.src('index.html')
         .pipe(htmlreplace({
             'js': 'build/build.js'
         }, { keepBlockTags: true }))
         .pipe(gulp.dest('.'));
+});
+
+
+
+
+//  ┌─┐┬┌─┐
+//  ┌─┘│├─┘
+//  └─┘┴┴
+
+gulp.task('zip', function () {
+    //return gulp.src('./!(node_modules)!(js/**)**')
+    return gulp.src(['./**', '!node_modules/**', '!mock_data/**', '!assets/img/bg_14px.jpg', '!assets/img/CMS_Silicon_Tracker_Arty_HiRes.jpg', '!js/**', '!sass/**'])
+        .pipe(zip('prod.zip'))
+        .pipe(gulp.dest('build/prod/'));
 });
