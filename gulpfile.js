@@ -1,7 +1,11 @@
-var gulp    = require('gulp'),
-    concat  = require('gulp-concat'),
-    sass    = require('gulp-sass'),
-    connect = require('gulp-connect');
+var gulp        = require('gulp'),
+    concat      = require('gulp-concat'),
+    sass        = require('gulp-sass'),
+    connect     = require('gulp-connect'),
+    ngAnnotate  = require('gulp-ng-annotate'),
+    rename      = require('gulp-rename'),
+    uglify      = require('gulp-uglify'),
+    htmlreplace = require('gulp-html-replace');
 
 
 
@@ -16,7 +20,11 @@ var gulp    = require('gulp'),
 //
 ///////////////////////////////////////////////
 
-gulp.task('default', ['concatSrc', 'sass', 'connect', 'watch']);
+gulp.task('default', ['htmlreplacedev', 'concatSrc', 'sass', 'connect', 'watch']);
+
+gulp.task('prod', ['concatSrc', 'sass', 'annotate', 'htmlreplaceprod']);
+
+
 
 gulp.task('concatLibs', function () {
     return gulp.src([
@@ -52,4 +60,32 @@ gulp.task('connect', function() {
     connect.server({
         livereload: true
     });
+});
+
+gulp.task('annotate', function () {
+    return gulp.src('build/build.js')
+        .pipe(ngAnnotate({
+            remove: true,
+            add: true,
+            single_quotes: true
+        }))
+        .pipe(uglify())
+        .pipe(rename('build.min.js'))
+        .pipe(gulp.dest('./build/prod/'));
+});
+
+gulp.task('htmlreplaceprod', function () {
+    return gulp.src('index.html')
+        .pipe(htmlreplace({
+            'js': 'build/prod/build.min.js'
+        }, { keepBlockTags: true }))
+        .pipe(gulp.dest('.'));
+});
+
+gulp.task('htmlreplacedev', function () {
+    return gulp.src('index.html')
+        .pipe(htmlreplace({
+            'js': 'build/build.js'
+        }, { keepBlockTags: true }))
+        .pipe(gulp.dest('.'));
 });
