@@ -55,6 +55,7 @@ function QuestionsService() {
 
         for(var i=0; i<qs.questions.length; i++) {
             (qs.currentAnswers[i] === -1) && (qs.currentAnswers[i] = 0);
+            console.log('qs.currentAnswers', qs.currentAnswers);
             (qs.questions[i].correctAnswer === qs.currentAnswers[i]) && qs.score++;
         }
         return qs.score;

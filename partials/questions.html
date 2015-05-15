@@ -20,9 +20,9 @@
                         <ul ng-repeat="entry in questions.choices" class="list-group-item choices">
 
                             <input id="{{entry}}" type="radio" name="answerRadio" ng-checked="$index == checkedQuestion($index)" ng-click="onRadioChanged($index)" />
-                            <!--<label for="{{entry}}">-->
+                            <label for="{{entry}}">
                                 <span class="entry">{{entry}}</span>
-                            <!--</label>-->
+                            </label>
 
                         </ul>
                         </div>

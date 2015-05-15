@@ -8,6 +8,14 @@
 
     opacity: 0.9;
 
+    input[type="radio"] {
+        outline: none;
+    }
+
+    label {
+        font-weight: 300;
+    }
+
     .container-fluid {
         padding-right: 15px;
         padding-left: 15px;

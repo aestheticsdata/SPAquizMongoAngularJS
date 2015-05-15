@@ -96,7 +96,8 @@ function ScoreController($scope, QuestionsService) {
 // ConstantService.js
 
 angular.module('SPAquiz.services').constant('CONFIG', {
-        loginUrl: 'http://www.hexafarm.com:8990/login'
+        loginUrl : 'http://www.hexafarm.com:8990/login',
+        debug    : true
     });
 
 //loginService.js
@@ -119,11 +120,19 @@ function LoginService($http, CONFIG) {
 //  ┴  ┴└─┴ └┘ ┴ ┴ ┴ └─┘  ┴ ┴└─┘ ┴ ┴ ┴└─┘─┴┘└─┘
 
     function _login(user, pass) {
-        return $http.post(
-            CONFIG.loginUrl, {
-            username : user,
-            password : pass
-        });
+
+        if (CONFIG.debug) {
+
+            return $http.get('../mock_data/questions.json')
+
+        } else {
+
+            return $http.post(
+                    CONFIG.loginUrl, {
+                        username : user,
+                        password : pass
+                    });
+        }
     }
 }
 // QuestionsService.js
@@ -183,6 +192,7 @@ function QuestionsService() {
 
         for(var i=0; i<qs.questions.length; i++) {
             (qs.currentAnswers[i] === -1) && (qs.currentAnswers[i] = 0);
+            console.log('qs.currentAnswers', qs.currentAnswers);
             (qs.questions[i].correctAnswer === qs.currentAnswers[i]) && qs.score++;
         }
         return qs.score;

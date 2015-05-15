@@ -18,10 +18,18 @@ function LoginService($http, CONFIG) {
 //  ┴  ┴└─┴ └┘ ┴ ┴ ┴ └─┘  ┴ ┴└─┘ ┴ ┴ ┴└─┘─┴┘└─┘
 
     function _login(user, pass) {
-        return $http.post(
-            CONFIG.loginUrl, {
-            username : user,
-            password : pass
-        });
+
+        if (CONFIG.debug) {
+
+            return $http.get('../mock_data/questions.json')
+
+        } else {
+
+            return $http.post(
+                    CONFIG.loginUrl, {
+                        username : user,
+                        password : pass
+                    });
+        }
     }
 }
