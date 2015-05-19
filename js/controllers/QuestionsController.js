@@ -22,6 +22,7 @@ function QuestionsController($scope, $state, $stateParams, QuestionsService) {
 
 
     $scope.checkedQuestion = function () {
+        console.log('checkedQuestion');
         return QuestionsService.currentAnswers[currentIndex] === -1 ? 0 : QuestionsService.currentAnswers[currentIndex];
     };
 

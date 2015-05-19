@@ -1,6 +1,6 @@
 // app.js
 
-angular.module('SPAquiz', ['SPAquiz.controllers', 'SPAquiz.services', 'ui.router'])
+angular.module('SPAquiz', ['SPAquiz.directives', 'SPAquiz.controllers', 'SPAquiz.services', 'ui.router'])
     .config(function ($stateProvider, $urlRouterProvider) {
 
 

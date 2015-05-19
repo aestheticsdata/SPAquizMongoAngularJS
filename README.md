@@ -1,3 +1,3 @@
 # SPAquizMongoAngularJS
 
-AngularJS / SASS / Bootstrap / Gulp
+AngularJS / ui-router / SASS / Bootstrap / Gulp

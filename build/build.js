@@ -1,9 +1,27 @@
 //ControllerNS.js
 
 angular.module('SPAquiz.controllers', []);
+//DirectivesNS.js
+
+angular.module('SPAquiz.directives', []);
 //ServicesNS.js
 
 angular.module('SPAquiz.services', []);
+// questions.js
+
+angular.module('SPAquiz.directives').directive('hxfQuestions', hxfQuestions);
+
+function hxfQuestions() {
+    return {
+        restrict: 'E',
+        templateUrl: '../templates/questionsPanel.html',
+        scope: {
+            entries         : '=model',
+            checkedQuestion : '&checkedquestion',
+            onRadioChanged  : '&onradiochanged'
+        }
+    }
+}
 //loginController.js
 
 angular.module('SPAquiz.controllers').controller('LoginController', LoginController);
@@ -65,6 +83,7 @@ function QuestionsController($scope, $state, $stateParams, QuestionsService) {
 
 
     $scope.checkedQuestion = function () {
+        console.log('checkedQuestion');
         return QuestionsService.currentAnswers[currentIndex] === -1 ? 0 : QuestionsService.currentAnswers[currentIndex];
     };
 
@@ -97,7 +116,7 @@ function ScoreController($scope, QuestionsService) {
 
 angular.module('SPAquiz.services').constant('CONFIG', {
         loginUrl : 'http://www.hexafarm.com:8990/login',
-        debug    : true
+        debug    : false
     });
 
 //loginService.js
@@ -167,7 +186,7 @@ function QuestionsService() {
         qs.questions = questions;
 
         for (var i=0; i<qs.questions.length; i++) {
-            qs.currentAnswers.push(-1);
+            qs.currentAnswers.push(-1); // -1 is a flag to check if a radio button has been changed
         }
 
         return true;
@@ -200,7 +219,7 @@ function QuestionsService() {
 }
 // app.js
 
-angular.module('SPAquiz', ['SPAquiz.controllers', 'SPAquiz.services', 'ui.router'])
+angular.module('SPAquiz', ['SPAquiz.directives', 'SPAquiz.controllers', 'SPAquiz.services', 'ui.router'])
     .config(function ($stateProvider, $urlRouterProvider) {
 
 

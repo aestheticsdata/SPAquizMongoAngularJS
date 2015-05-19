@@ -30,7 +30,7 @@ function QuestionsService() {
         qs.questions = questions;
 
         for (var i=0; i<qs.questions.length; i++) {
-            qs.currentAnswers.push(-1);
+            qs.currentAnswers.push(-1); // -1 is a flag to check if a radio button has been changed
         }
 
         return true;
