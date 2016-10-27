@@ -10,6 +10,9 @@ function QuestionsController($scope, $state, $stateParams, QuestionsService) {
 
 
 
+    if (QuestionsService.questions.length == 0) {
+        $state.go('login');
+    }
 
     $scope.isPrevDisabled = (parseInt(currentIndex) === 0);
     $scope.isNextDisabled = false;

@@ -26,7 +26,11 @@ function LoginService($http, CONFIG) {
         } else {
 
             return $http.post(
-                    CONFIG.loginUrl, {
+                    // CONFIG.loginUrl, {
+                    //     username : user,
+                    //     password : pass
+                    // });
+                    CONFIG.loginUrl_alt, {
                         username : user,
                         password : pass
                     });
